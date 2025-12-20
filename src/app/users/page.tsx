@@ -1,6 +1,7 @@
 import Link from "next/link";
 import Search from "../components/Search";
 import Pagination from "../components/Pagination";
+import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 
 interface User {
   id: number;
@@ -33,57 +34,45 @@ export default async function UsersPage(props: PageProps) {
   const paginatedUsers = filteredUsers.slice(startIndex, startIndex + ITEMS_PER_PAGE);
 
   return (
-    <div style={{ padding: "40px", fontFamily: "sans-serif" }}>
-      <h1 style={{ marginBottom: "20px", fontSize: "2rem", fontWeight: "bold" }}>
-        👥 Elite User List (Server Side)
+    <div className="p-10 font-sans max-w-5xl mx-auto">
+      <h1 className="text-3xl font-bold mb-6 text-zinc-800 dark:text-white">
+        👥 Elite User List
       </h1>
       
       <Search />
-      <p style={{ marginBottom: "30px", color: "#888", fontSize: "14px" }}>
+      <p className="mb-8 text-zinc-500 text-sm">
        {query
        ? `Menemukan ${filteredUsers.length} user dengan nama "${query}"`
-       : `Menampilkan semua ${users.length} user`
+       : `Show all ${users.length} user`
        }
       </p>
 
-      <div 
-        style={{ 
-          display: "grid", 
-          gridTemplateColumns: "repeat(auto-fit, minmax(250px, 1fr))", 
-          gap: "20px" ,
-          minHeight: "300px"
-        }}
-      >
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {paginatedUsers.length > 0 ? (
         paginatedUsers.map((user) => (
           <Link 
             href={`/users/${user.id}`} 
             key={user.id} 
-            style={{ textDecoration: "none" }}
+            className="no-underline"
           >
-            <div 
-              style={{ 
-                padding: "20px", 
-                border: "1px solid #333", 
-                borderRadius: "10px",
-                background: "#111",
-                color: "white",
-                transition: "transform 0.2s",
-                cursor: "pointer"
-              }}
-            >
-              <h3 style={{ color: "#0070f3", marginBottom: "5px" }}>{user.name}</h3>
-              <p style={{ fontSize: "14px", color: "#ccc" }}>📧 {user.email}</p>
-              <p style={{ fontSize: "14px", color: "#666" }}>🌐 {user.website}</p>
-            </div>
+            <Card className="hover:shadow-lg transition-shadow cursor-pointer border-zinc-200 dark:border-zinc-800">
+              <CardHeader>
+                <CardTitle className="text-blue-600">{user.name}</CardTitle>
+              </CardHeader>
+              <CardContent className="text-sm text-zinc-600 dark:text-zinc-400">
+                <p>📧 {user.email}</p>
+                <p>🌐 {user.website}</p>
+              </CardContent>
+            </Card>
           </Link>
         ))
       ) : (
-      <div style={{ color: "red", gridColumn: "1 / -1", textAlign: "center", padding: "20px" }}>
+      <div className="col-span-full text-center text-red-500 py-10 bg-red-50 rounded-lg">
         ❌ No user found with the name "<strong>{query}</strong>"
      </div>
      )}
       </div>
+      
       {totalPages > 1 && (
         <Pagination totalPages={totalPages} />
       )}

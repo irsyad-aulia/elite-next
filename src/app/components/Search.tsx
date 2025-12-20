@@ -2,6 +2,7 @@
 
 import { useSearchParams, usePathname, useRouter } from "next/navigation";
 import { useDebouncedCallback } from "use-debounce";
+import { input } from "@/componentss/ui/input";
 
 export default function Search() {
     const searchParams = useSearchParams();
@@ -9,7 +10,6 @@ export default function Search() {
     const { replace } = useRouter();
 
     const handleSearch = useDebouncedCallback((term: string) => {
-        console.log(`Searching... ${term}`);
         const params = new URLSearchParams(searchParams);
         if (term) {
             params.set("query", term);
@@ -20,22 +20,13 @@ export default function Search() {
     }, 300);
 
     return (
-        <div style={{ marginBottom: "20px" }}>
+        <div className="mb-6">
             <input
             type="text"
             placeholder="🔍 Search user by name..."
             onChange={(e) => handleSearch(e.target.value)}
             defaultValue={searchParams.get("query")?.toString()}
-            style={{
-                width: "100%",
-                padding: "15px",
-                borderRadius: "8px",
-                border: "1px solid #333",
-                background: "#222",
-                color: "white",
-                fontSize: "16px",
-                outline: "none",
-            }}
+            className="w-full bg-white text-black dark:bg-zinc-950 dark:text-white"
             />
         </div>
     );

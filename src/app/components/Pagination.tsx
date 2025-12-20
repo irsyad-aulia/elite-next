@@ -1,6 +1,7 @@
 "use client";
 
 import { useSearchParams, usePathname, useRouter } from "next/navigation";
+import {  Button } from "@/components/ui/button";
 
 interface PaginationProps {
 totalPages: number;
@@ -21,40 +22,27 @@ export default function Pagination({ totalPages }: PaginationProps) {
     };
 
     return (
-        <div style={{ display: "flex", gap: "10px", justifyContent: "center", marginTop: "40px" }}>
-            <button
+        <div className="flex gap-4 justify-center mt-10 items-center">
+            <Button
+            variant="outline"
             disabled={currentPage <= 1}
             onClick={() => handlePageChange(currentPage - 1)}
-            style={{
-                padding: "10px 20px",
-                background: currentPage <= 1 ? "#333" : "#0070f3",
-                color: currentPage <= 1 ? "#666" : "white",
-                border: "none",
-                borderRadius: "5px",
-                cursor: currentPage <= 1 ? "not-allowed" : "pointer",
-            }}
             >
-                &larr; Previous
-            </button>
 
-            <span style={{ color: "#ccc", alignSelf: "center" }}>
+                &larr; Previous
+            </Button>
+
+            <span className="text-zinc-400 text-sm">
                 page {currentPage} of {totalPages}
             </span>
 
-            <button
+            <Button
+            variant="outline"
             disabled={currentPage >= totalPages}
             onClick={() => handlePageChange(currentPage + 1)}
-            style={{
-                padding: "10px 20px",
-                background: currentPage >= totalPages ? "#333" : "#0070f3",
-                color: currentPage >= totalPages ? "#666" : "white",
-                border: "none",
-                borderRadius: "5px",
-                cursor: currentPage >= totalPages ? "not-allowed" : "pointer",
-            }}
             >
                 Next &rarr;
-            </button>
+            </Button>
         </div>
     );
 }
