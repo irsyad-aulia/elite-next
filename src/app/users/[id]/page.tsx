@@ -1,3 +1,26 @@
+import { Metadata } from "next";
+
+interface Props {
+  params: Promise<{ id: string }>;
+}
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const resolvedParams = await params;
+  const id = resolvedParams.id;
+  const res = await fetch(`https:jsonplaceholder.typicode.com/users/${id}`);
+
+  if (!res.ok) {
+    return {
+      title: "User Not Found",
+      description: `No user found with ID ${id}.`,
+    };
+  } 
+  const user = await res.json();
+  return {
+    title: `${user.name} | EliteNext`,
+    description: `Detailed profile of ${user.name} (${user.email})`,
+  };
+}
+
 interface UserDetail {
     id: string;
     name: string;
