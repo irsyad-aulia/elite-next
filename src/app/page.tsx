@@ -22,7 +22,7 @@ export default function Home() {
       </h1>
       
       <p className="text-lg text-zinc-600 dark:text-zinc-400 max-w-md">
-        Kelola data user dengan performa tinggi, desain elegan, dan teknologi terkini.
+        Manage user data with high performance, elegant design, and the latest technology.
       </p>
 
       <div className="flex gap-4">
